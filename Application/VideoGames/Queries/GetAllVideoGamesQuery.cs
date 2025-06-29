@@ -20,12 +20,15 @@ public class GetAllVideoGamesQuery : IRequest<IEnumerable<GetAllVideoGamesQuery.
             CancellationToken cancellationToken)
         {
             List<Result> videoGames = await _context.VideoGames
+                .Where(p => p.DeletedAt == null)
                 .Select(v => new Result
                 {
                     VideoGameId = v.VideoGameId,
                     Title = v.Title,
                     Genre = v.Genre,
-                    ReleaseDate = v.ReleaseDate
+                    ReleaseDate = v.ReleaseDate,
+                    CreatedAt = v.CreatedAt,
+                    UpdatedAt = v.UpdatedAt,
                 })
                 .ToListAsync(cancellationToken);
 
@@ -39,5 +42,7 @@ public class GetAllVideoGamesQuery : IRequest<IEnumerable<GetAllVideoGamesQuery.
         public string Title { get; set; } = string.Empty;
         public string Genre { get; set; } = string.Empty;
         public DateTime ReleaseDate { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
     }
 }

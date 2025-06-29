@@ -33,7 +33,8 @@ public class DeleteVideoGameCommand : IRequest<DeleteVideoGameCommand.Result>
             if (existing == null)
                 return new Result { };
 
-            _context.VideoGames.Remove(existing);
+            existing.DeletedAt = DateTime.UtcNow;
+            
             await _context.SaveChangesAsync(cancellationToken);
 
             return new Result

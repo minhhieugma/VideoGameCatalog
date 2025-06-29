@@ -41,6 +41,8 @@ public class UpdateVideoGameCommand : IRequest<UpdateVideoGameCommand.Result>
             existing.Title = command.Title;
             existing.Genre = command.Genre;
             existing.ReleaseDate = command.ReleaseDate;
+            existing.UpdatedAt = DateTime.UtcNow;
+            
 
             await _context.SaveChangesAsync(cancellationToken);
 
